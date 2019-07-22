@@ -1,5 +1,7 @@
 package com.hcl.flight.model;
 
+import com.hcl.flight.enums.UserRole;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -23,6 +25,6 @@ private Long userId;
 	
 	private Long userGender;
 	
-	private String userRole;
+	private UserRole userRole;
 	
 }
