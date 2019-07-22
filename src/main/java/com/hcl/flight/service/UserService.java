@@ -22,10 +22,7 @@ public class UserService {
 	
 	BookingRepository bookingRepository;
 	
-/*	public List<Booking> loginUser(String  userName, String password){
-=======
 	public List<Booking> loginUser(String  userName, String password) throws UserNotFoundException{
->>>>>>> 4a2f93f5ea80e417f15d6f9b05ccab723944c908
 		
 		User loginUser = userRepository.findUserByUserNameAndPassword(userName, password);
 			
@@ -36,7 +33,7 @@ public class UserService {
 					throw new UserNotFoundException("No user found !!!");
 				}
 			}
-	}*/
+	
 	
 	public Optional<User> getUserFromRepo(Long userId) {
 		Optional<User> user = userRepository.findById(userId);
