@@ -1,7 +1,5 @@
 package com.hcl.flight.model;
 
-import com.hcl.flight.enums.UserRole;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -13,18 +11,12 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDTO {
+public class PassengerDTO 
+{
 
-private Long userId;
-	
-	private String userName;
-	
-	private String password;
-	
-	private Integer userAge;
-	
-	private Long userGender;
-	
-	private UserRole userRole;
+	private String passengerName;
+	private Integer passengerAge;
+	private String passengerGender;
+
 	
 }

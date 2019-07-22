@@ -9,6 +9,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.hcl.flight.enums.UserRole;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -41,10 +42,10 @@ public class User {
 	private Integer userAge;
 	
 	@Column(name = "user_gender", nullable=false)
-	private Long userGender;
+	private String userGender;
 	
 	@Column(name = "user_role", nullable=false)
-	private String userRole;
+	private UserRole userRole;
 	
 	
 }
