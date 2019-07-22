@@ -1,10 +1,14 @@
 package com.hcl.flight.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hcl.flight.entity.Flight;
 import com.hcl.flight.repository.FlightRepository;
+import com.hcl.flight.utility.ObjectUtility;
 import com.hcl.flight.validation.Validation;
 
 @Service
@@ -20,6 +24,14 @@ public class FlightService {
 		String msg ="";
 		//Validation
 		return msg;
+	}
+
+	public List<Flight> searchFlight(Flight flight) 
+	{
+		Optional<List<Flight>> findBySourceAndDestinationOptional = flightRepository.findBySourceAndDestination(flight.getSource(), flight.getDestination());
+		List<Flight> flightList = (List<Flight>) ObjectUtility.checkOptional(findBySourceAndDestinationOptional);
+		return flightList;
+		
 	}
 
 }
