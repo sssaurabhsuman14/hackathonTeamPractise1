@@ -10,20 +10,38 @@ import com.hcl.flight.entity.Flight;
 import com.hcl.flight.exception.ApplicationException;
 import com.hcl.flight.repository.FlightRepository;
 import com.hcl.flight.utility.ObjectUtility;
+import com.hcl.flight.exception.DataInsertException;
+import com.hcl.flight.model.FlightDTO;
+import com.hcl.flight.repository.FlightRepository;
+import com.hcl.flight.utility.ObjectUtils;
 import com.hcl.flight.validation.Validation;
 
 @Service
 public class FlightService {
-	
+
 	@Autowired
 	FlightRepository flightRepository;
-	
+
+	@Autowired
+	ObjectUtils objectUtils;
+
+
 	@Autowired
 	Validation validation;
-	
-	public String addFlight(Long userId, Flight flight) {
+
+	public String addFlight(Long userId, FlightDTO flightDTO) {
+
+
+		if(validation.checkValidationsForAddingFlight(flightDTO)) {
+			Flight flight = new Flight();
+
+			flight = (Flight) ObjectUtils.mappingObjects(flightDTO, flight);
+
+			flightRepository.save(flight);
+		} else {
+			throw new DataInsertException("Error while saving flight details. " );
+		}
 		String msg ="";
-		//Validation
 		return msg;
 	}
 

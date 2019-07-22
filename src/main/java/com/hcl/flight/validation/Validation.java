@@ -6,6 +6,8 @@ import org.springframework.util.StringUtils;
 import com.hcl.flight.exception.ApplicationException;
 import com.hcl.flight.model.SearchFlightModel;
 
+import com.hcl.flight.model.FlightDTO;
+
 @Component
 public class Validation {
 
@@ -22,4 +24,11 @@ public class Validation {
 		
 	}
 
+	public boolean checkValidationsForAddingFlight(FlightDTO flightDTO) {	
+
+		if(!(flightDTO.getSource().isEmpty() || flightDTO.getDestination().isEmpty() || flightDTO.getFlightNumber().isEmpty() || flightDTO.getTotalSeats()>0 || flightDTO.getFare()>0)) {
+			return true;
+		}
+		return false;
+	}
 }
