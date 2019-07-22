@@ -3,6 +3,7 @@ package com.hcl.flight.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hcl.flight.entity.Flight;
 import com.hcl.flight.repository.FlightRepository;
 import com.hcl.flight.validation.Validation;
 
@@ -16,7 +17,8 @@ public class FlightService {
 	Validation validation;
 	
 	public String addFlight(Long userId, Flight flight) {
-		Validation
+		String msg ="";
+		//Validation
 		return msg;
 	}
 
