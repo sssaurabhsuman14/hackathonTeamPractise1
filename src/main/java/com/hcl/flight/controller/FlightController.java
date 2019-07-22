@@ -63,10 +63,8 @@ public class FlightController {
 	}
 	@PostMapping
 	public ResponseEntity<String> addFlight(@PathVariable Long userId, @Valid @RequestBody FlightDTO flightDTO) {
-		String str= "";
-		//validation for user
 		flightService.addFlight(userId, flightDTO);
-		
+        
 		return new ResponseEntity<String>("Flight added successfully", HttpStatus.OK); 
 	}
 	

@@ -5,7 +5,7 @@ public enum UserRole {
 	SUPERUSER("SUPERUSER"),
 	ADMIN("ADMIN"),
 	USER("USER");
-	
+					
 	private String value;
 	
 	public String getValue() {

@@ -1,7 +1,6 @@
 package com.hcl.flight.entity;
 
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;

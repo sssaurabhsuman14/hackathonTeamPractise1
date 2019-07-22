@@ -8,10 +8,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.hcl.flight.entity.Flight;
+import com.hcl.flight.entity.User;
+import com.hcl.flight.enums.UserRole;
 import com.hcl.flight.exception.ApplicationException;
 import com.hcl.flight.exception.DataInsertException;
 import com.hcl.flight.model.FlightDTO;
 import com.hcl.flight.repository.FlightRepository;
+import com.hcl.flight.repository.UserRepository;
 import com.hcl.flight.utility.ObjectUtility;
 import com.hcl.flight.utility.ObjectUtils;
 import com.hcl.flight.validation.Validation;
@@ -23,6 +26,9 @@ public class FlightService {
 	FlightRepository flightRepository;
 
 	@Autowired
+	UserRepository userRepository;
+
+	@Autowired
 	ObjectUtility objectUtility;
 
 
@@ -31,22 +37,24 @@ public class FlightService {
 
 	public String addFlight(Long userId, FlightDTO flightDTO) {
 
+		Optional<User> user = userRepository.findById(userId);
+		if (user.get().getUserRole().equals(UserRole.ADMIN)) {
+			if(validation.checkValidationsForAddingFlight(flightDTO)) {
+				Flight flight = new Flight();
 
-		if(validation.checkValidationsForAddingFlight(flightDTO)) {
-			Flight flight = new Flight();
+				flight = (Flight) objectUtility.mappingObjects(flightDTO, flight);
 
-			flight = (Flight) objectUtility.mappingObjects(flightDTO, flight);
-
-			flightRepository.save(flight);
-		} else {
-			throw new DataInsertException("Error while saving flight details. " );
+				flightRepository.save(flight);
+			} else {
+				throw new DataInsertException("Error while saving flight details. " );
+			}
 		}
-		String msg ="";
+		String msg ="SUCCESSFUL SAVING.";
 		return msg;
 	}
 
-public boolean updateFlightByNumberOfSeats(Flight flight, Integer numberOfSeatsBooked) {
-		
+	public boolean updateFlightByNumberOfSeats(Flight flight, Integer numberOfSeatsBooked) {
+
 		if( flight != null) {
 			Integer updatedAvailableSeats = flight.getAvailableSeats() - numberOfSeatsBooked;
 			flight.setAvailableSeats(updatedAvailableSeats);
@@ -54,13 +62,13 @@ public boolean updateFlightByNumberOfSeats(Flight flight, Integer numberOfSeatsB
 			return true;
 		}
 		return false;
-}
-	public List<Flight> searchFlight(Flight flight) throws ApplicationException 
+	}
 	public List<Flight> searchFlight(Flight flight, String sortByParam) throws ApplicationException 
 	{
 		
 		List<Flight> flightList = (List<Flight>) ObjectUtility.checkOptional(checkSortByParam(flight, sortByParam));
 		
+
 		if(flightList != null)
 			return flightList;
 		else
@@ -89,6 +97,8 @@ public boolean updateFlightByNumberOfSeats(Flight flight, Integer numberOfSeatsB
 			throw new ApplicationException("Please select the proper sorting parameter");
 		}
 		
+
+
 	}
 
 }
