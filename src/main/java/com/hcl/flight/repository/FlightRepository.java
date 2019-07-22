@@ -16,4 +16,6 @@ public interface FlightRepository extends JpaRepository<Flight, Long>{
 	
 	public Optional<List<Flight>> findBySourceAndDestinationAndAvailableSeatsIsGreaterThanAndStatusEquals(String source, String destination, int seats, String status, Sort sort);
 
+	public Optional<List<Flight>> findByStatusNot(String string);
+
 }

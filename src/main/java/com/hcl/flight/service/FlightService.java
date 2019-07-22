@@ -98,7 +98,17 @@ public class FlightService {
 		}
 		
 
-
 	}
 
+	public List<Flight> getFlightByStatusNotApproved() throws ApplicationException 
+	{
+		Optional<List<Flight>> findByStatusOptional = flightRepository.findByStatusNot("APPROVED");
+		List<Flight> flightList = (List<Flight>) ObjectUtility.checkOptional(findByStatusOptional);
+		
+		if(flightList != null)
+			return flightList;
+		else
+			throw new ApplicationException("No Flights Available for Approval");
+	}
+	
 }

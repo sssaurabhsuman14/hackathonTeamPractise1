@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hcl.flight.entity.Booking;
+import com.hcl.flight.entity.Flight;
 import com.hcl.flight.entity.User;
+import com.hcl.flight.exception.ApplicationException;
 import com.hcl.flight.exception.UserNotFoundException;
 import com.hcl.flight.repository.BookingRepository;
 import com.hcl.flight.repository.UserRepository;
@@ -22,7 +24,10 @@ public class UserService {
 	
 	BookingRepository bookingRepository;
 	
-	public List<Booking> loginUser(String  userName, String password) throws UserNotFoundException{
+	@Autowired
+	FlightService flightService;
+	
+public List<Booking> loginUser(String  userName, String password) throws UserNotFoundException{
 		
 		User loginUser = userRepository.findUserByUserNameAndPassword(userName, password);
 			
@@ -43,5 +48,12 @@ public class UserService {
 	public User getUserFromRepoOnUsernameAndPassword(String userName, String password) {
 		User user = userRepository.findUserByUserNameAndPassword(userName, password);
 		return user;
+	}
+	
+	public List<Flight> getFlightByStatusNotApproved() throws ApplicationException{
+		
+		List<Flight> flights = flightService.getFlightByStatusNotApproved();
+		return flights;
+		
 	}
 }
