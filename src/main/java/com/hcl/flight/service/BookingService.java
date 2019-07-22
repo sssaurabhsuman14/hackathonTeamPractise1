@@ -56,7 +56,7 @@ public class BookingService {
 		
 		if(null!=flight)
 		{
-			isFlightByAvailableSeats = validation.validateFlightByAvailableSeats(flight.getAvailableSeats(),passengers.size());
+			//isFlightByAvailableSeats = validation.validateFlightByAvailableSeats(flight.getAvailableSeats(),passengers.size());
 		}
 		else
 		{
@@ -81,6 +81,7 @@ public class BookingService {
 			try {
 				
 			    flightService.updateFlightByNumberOfSeats(flight, passengers.size());
+			    //flightservice.updateFlightByNumberOfSeats(flight, passengers.size());
 			}
 			
 			catch(Exception ex) {

@@ -16,7 +16,5 @@ public class SearchFlightModel
 	private String destination;
 	
 	private LocalDate flightDate;
-	
-	private String sortByParam;
 
 }

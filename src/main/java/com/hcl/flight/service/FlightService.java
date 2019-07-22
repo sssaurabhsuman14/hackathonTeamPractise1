@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.hcl.flight.entity.Flight;
@@ -55,15 +56,38 @@ public boolean updateFlightByNumberOfSeats(Flight flight, Integer numberOfSeatsB
 		return false;
 }
 	public List<Flight> searchFlight(Flight flight) throws ApplicationException 
+	public List<Flight> searchFlight(Flight flight, String sortByParam) throws ApplicationException 
 	{
-		Optional<List<Flight>> findBySourceAndDestinationOptional = flightRepository.findBySourceAndDestination(flight.getSource(), flight.getDestination());
-		List<Flight> flightList = (List<Flight>) ObjectUtility.checkOptional(findBySourceAndDestinationOptional);
+		
+		List<Flight> flightList = (List<Flight>) ObjectUtility.checkOptional(checkSortByParam(flight, sortByParam));
 		
 		if(flightList != null)
 			return flightList;
 		else
 			throw new ApplicationException("No Flights Available for : "+flight.getSource()+"->"+flight.getDestination());
+	
+	}
+
+	private Optional<List<Flight>> checkSortByParam(Flight flight, String sortByParam) throws ApplicationException 
+	{
+		Sort sortParam = Sort.by(Sort.Direction.ASC, "fare");
+		switch(sortByParam)
+		{
+		case "fare":
+			sortParam = Sort.by(Sort.Direction.ASC, "fare");
+			return flightRepository.findBySourceAndDestinationAndAvailableSeatsIsGreaterThanAndStatusEquals(flight.getSource(), flight.getDestination(),0, "approved", sortParam);
 		
+		case "departure":
+			sortParam = Sort.by(Sort.Direction.ASC, "departure");
+			return flightRepository.findBySourceAndDestinationAndAvailableSeatsIsGreaterThanAndStatusEquals(flight.getSource(), flight.getDestination(),0, "approved", sortParam);
+		
+		case "seats":
+			sortParam = Sort.by(Sort.Direction.DESC, "available_seats");
+			return flightRepository.findBySourceAndDestinationAndAvailableSeatsIsGreaterThanAndStatusEquals(flight.getSource(), flight.getDestination(),0, "approved", sortParam);
+		
+		default :
+			throw new ApplicationException("Please select the proper sorting parameter");
+		}
 		
 	}
 
