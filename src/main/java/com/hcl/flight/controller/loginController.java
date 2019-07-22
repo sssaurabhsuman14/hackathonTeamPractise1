@@ -31,18 +31,17 @@ public class loginController {
 	public ResponseEntity<?> loginUser(@RequestParam(value = "userName") String userName,
 			@RequestParam(value = "password") String password) throws UserNotFoundException{
 
-		User user = new User();
-		user= userService.getUserFromRepoOnUsernameAndPassword(userName, password);
 		
-		if(validation.validateUser(user.getUserName(),user.getPassword())){
-			if(user.getUserRole().getValue().equalsIgnoreCase("User")) {
+		if(validation.validateUser(userName,password)){
+			User user = userService.getUserFromRepoOnUsernameAndPassword(userName, password);
+			if(user.getUserRole().getValue().equals("User")) {
 				return new ResponseEntity<>(userService.loginUser(userName, password), HttpStatus.OK);
 			}
-			else if(user.getUserRole().getValue().equalsIgnoreCase("Admin")){
-				return new ResponseEntity<>(userService.loginUser(userName, password), HttpStatus.BAD_GATEWAY);
+			else if(user.getUserRole().getValue().equals("admin")){
+				return new ResponseEntity<>(userService.loginUser(userName, password), HttpStatus.OK);
 			}
-			else if(user.getUserRole().getValue().equalsIgnoreCase("SuperAdmin")) {
-				return new ResponseEntity<>(userService.loginUser(userName, password), HttpStatus.NO_CONTENT);
+			else if(user.getUserRole().getValue().equals("superadmin")) {
+				return new ResponseEntity<>(userService.loginUser(userName, password), HttpStatus.OK);
 			}else
 				return new ResponseEntity<String>("Not a valid user", HttpStatus.NO_CONTENT);
 			
