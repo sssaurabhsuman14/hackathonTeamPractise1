@@ -4,14 +4,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.hcl.flight.entity.Flight;
 import com.hcl.flight.entity.User;
+import com.hcl.flight.exception.ApplicationException;
 import com.hcl.flight.exception.UserNotFoundException;
 import com.hcl.flight.service.UserService;
 import com.hcl.flight.validation.Validation;
+
+import antlr.collections.List;
 
 
 
@@ -50,4 +55,9 @@ public class loginController {
 		
 	}
 	
+	
+	@GetMapping("/{userId}")
+	public ResponseEntity<?> getFlightByStatusNotApproved(@PathVariable("userId") Integer userId) throws ApplicationException{
+		return new ResponseEntity<>( userService.getFlightByStatusNotApproved(), HttpStatus.OK);
+	}
 }
