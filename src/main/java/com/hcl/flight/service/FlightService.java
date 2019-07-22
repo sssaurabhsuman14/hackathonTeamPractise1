@@ -22,4 +22,15 @@ public class FlightService {
 		return msg;
 	}
 
+public boolean updateFlightByNumberOfSeats(Flight flight, Integer numberOfSeatsBooked) {
+		
+		if( flight != null) {
+			Integer updatedAvailableSeats = flight.getAvailableSeats() - numberOfSeatsBooked;
+			flight.setAvailableSeats(updatedAvailableSeats);
+			flightRepository.save(flight);
+			return true;
+		}
+		return false;
+	}
+
 }

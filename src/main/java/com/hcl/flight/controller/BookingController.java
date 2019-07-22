@@ -31,8 +31,16 @@ public class BookingController
 				booking = bookingService.doFlightBooking(userId, flightId, passengerList);
 			
 				
-				return new ResponseEntity<>(booking,HttpStatus.OK);
-	
+				if(null!=booking)
+				{
+				
+				   return new ResponseEntity<>(booking,HttpStatus.OK);
+				}
+				else
+				{
+					
+					 return new ResponseEntity<>("Not Done",HttpStatus.OK);
+				}
 	
 }
 }

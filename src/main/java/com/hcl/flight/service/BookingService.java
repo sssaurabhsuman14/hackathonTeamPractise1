@@ -15,6 +15,7 @@ import com.hcl.flight.entity.User;
 import com.hcl.flight.model.PassengerDTO;
 import com.hcl.flight.repository.BookingRepository;
 import com.hcl.flight.repository.FlightRepository;
+import com.hcl.flight.repository.PassengerRepository;
 import com.hcl.flight.repository.UserRepository;
 import com.hcl.flight.utility.FareUtils;
 import com.hcl.flight.validation.Validation;
@@ -24,17 +25,19 @@ public class BookingService {
 
 	
 	@Autowired
-	BookingRepository bookingrepossitory;
+	BookingRepository bookingRepossitory;
 	
 	@Autowired
-	FlightService flightservice;
+	FlightService flightService;
 	
 	@Autowired
-	FlightRepository flightrepository;
-	
+	FlightRepository flightRepository;
 	
 	@Autowired
-	UserRepository userrepository;
+	PassengerRepository passengerRepository;
+	
+	@Autowired
+	UserRepository userRepository;
 	
 	@Autowired
 	Validation validation;
@@ -47,8 +50,8 @@ public class BookingService {
 	public Booking doFlightBooking(Long userId, Long flightId, List<PassengerDTO> passengers) {
 	
 		Booking booked = null;
-		Flight flight=flightrepository.findById(flightId).get();
-		User user=userrepository.findById(userId).get();
+		Flight flight=flightRepository.findById(flightId).get();
+		User user=userRepository.findById(userId).get();
 		boolean isFlightByAvailableSeats = false;
 		
 		if(null!=flight)
@@ -73,11 +76,11 @@ public class BookingService {
 			booking.setSeatBooked(passengers.size());
 			booking.setTotalFare(totalFare);
 			booking.setPassengers(passengerList);
-			booked=bookingrepossitory.save(booking);
+			booked=bookingRepossitory.save(booking);
 			
 			try {
 				
-			    flightservice.updateFlightByNumberOfSeats(flight, passengers.size());
+			    flightService.updateFlightByNumberOfSeats(flight, passengers.size());
 			}
 			
 			catch(Exception ex) {
@@ -97,6 +100,11 @@ public class BookingService {
 		
 		
 	}
+	
+	
+			
+		
+	
 	
 	
 	private List<Passenger> mappingPassengerModelListToPassengerList(List<PassengerDTO> passengers) 
