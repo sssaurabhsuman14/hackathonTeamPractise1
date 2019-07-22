@@ -42,7 +42,7 @@ public class User {
 	private Integer userAge;
 	
 	@Column(name = "user_gender", nullable=false)
-	private Long userGender;
+	private String userGender;
 	
 	@Column(name = "user_role", nullable=false)
 	private UserRole userRole;
