@@ -49,7 +49,7 @@ public class User {
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "user_role", nullable=false)
-	private String userRole;
+	private UserRole userRole;
 	
 	
 }
