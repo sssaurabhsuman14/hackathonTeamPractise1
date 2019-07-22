@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.hcl.flight.entity.User;
+import com.hcl.flight.exception.UserNotFoundException;
 import com.hcl.flight.service.UserService;
 import com.hcl.flight.validation.Validation;
 
@@ -25,20 +26,29 @@ public class loginController {
 	Validation validation; 
 	
 	
-	//@GetMapping("/user")
-/*	public ResponseEntity<?> loginUser(@RequestParam(value = "userName") String userName,
-			@RequestParam(value = "password") String password){
+
+	@GetMapping("/user")
+	public ResponseEntity<?> loginUser(@RequestParam(value = "userName") String userName,
+			@RequestParam(value = "password") String password) throws UserNotFoundException{
+
 		User user = new User();
 		user= userService.getUserFromRepoOnUsernameAndPassword(userName, password);
 		
 		if(validation.validateUser(user.getUserName(),user.getPassword())){
-			if(user.getUserRole()=="User") {
+			if(user.getUserRole().getValue().equalsIgnoreCase("User")) {
 				return new ResponseEntity<>(userService.loginUser(userName, password), HttpStatus.OK);
 			}
+			else if(user.getUserRole().getValue().equalsIgnoreCase("Admin")){
+				return new ResponseEntity<>(userService.loginUser(userName, password), HttpStatus.BAD_GATEWAY);
+			}
+			else if(user.getUserRole().getValue().equalsIgnoreCase("SuperAdmin")) {
+				return new ResponseEntity<>(userService.loginUser(userName, password), HttpStatus.NO_CONTENT);
+			}else
+				return new ResponseEntity<String>("Not a valid user", HttpStatus.NO_CONTENT);
 			
-		}
-		return new ResponseEntity<String>("success", HttpStatus.OK);
+		}else
+		return new ResponseEntity<String>("username/password cannot be empty", HttpStatus.NO_CONTENT);
 		
-	}*/
+	}
 	
 }
