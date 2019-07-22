@@ -3,7 +3,9 @@ package com.hcl.flight.utility;
 import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ObjectUtility 
 {
 	public static Object checkOptional(Optional<?> optionalObject) {

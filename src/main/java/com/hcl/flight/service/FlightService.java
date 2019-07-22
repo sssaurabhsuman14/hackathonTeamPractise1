@@ -8,11 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.hcl.flight.entity.Flight;
 import com.hcl.flight.exception.ApplicationException;
-import com.hcl.flight.repository.FlightRepository;
-import com.hcl.flight.utility.ObjectUtility;
 import com.hcl.flight.exception.DataInsertException;
 import com.hcl.flight.model.FlightDTO;
 import com.hcl.flight.repository.FlightRepository;
+import com.hcl.flight.utility.ObjectUtility;
 import com.hcl.flight.utility.ObjectUtils;
 import com.hcl.flight.validation.Validation;
 
@@ -23,7 +22,7 @@ public class FlightService {
 	FlightRepository flightRepository;
 
 	@Autowired
-	ObjectUtils objectUtils;
+	ObjectUtility objectUtility;
 
 
 	@Autowired
@@ -35,7 +34,7 @@ public class FlightService {
 		if(validation.checkValidationsForAddingFlight(flightDTO)) {
 			Flight flight = new Flight();
 
-			flight = (Flight) ObjectUtils.mappingObjects(flightDTO, flight);
+			flight = (Flight) objectUtility.mappingObjects(flightDTO, flight);
 
 			flightRepository.save(flight);
 		} else {

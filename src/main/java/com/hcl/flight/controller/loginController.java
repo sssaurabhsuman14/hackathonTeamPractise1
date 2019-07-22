@@ -25,8 +25,8 @@ public class loginController {
 	Validation validation; 
 	
 	
-	@GetMapping("/user")
-	public ResponseEntity<?> loginUser(@RequestParam(value = "userName") String userName,
+	//@GetMapping("/user")
+/*	public ResponseEntity<?> loginUser(@RequestParam(value = "userName") String userName,
 			@RequestParam(value = "password") String password){
 		User user = new User();
 		user= userService.getUserFromRepoOnUsernameAndPassword(userName, password);
@@ -39,6 +39,6 @@ public class loginController {
 		}
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 		
-	}
+	}*/
 	
 }
