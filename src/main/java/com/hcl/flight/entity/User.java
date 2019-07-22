@@ -45,7 +45,7 @@ public class User {
 	private String userGender;
 	
 	@Column(name = "user_role", nullable=false)
-	private UserRole userRole;
+	private String userRole;
 	
 	
 }

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.hcl.flight.entity.Booking;
 import com.hcl.flight.entity.User;
+import com.hcl.flight.exception.UserNotFoundException;
+import com.hcl.flight.repository.BookingRepository;
 import com.hcl.flight.repository.UserRepository;
 
 @Service
@@ -20,15 +22,15 @@ public class UserService {
 	
 	BookingRepository bookingRepository;
 	
-	public List<Booking> loginUser(String  userName, String password){
+	public List<Booking> loginUser(String  userName, String password) throws UserNotFoundException{
 		
-		User login = userRepository.findUserByUserNameAndPassword(userName, password);
-			if(login!=null) {
-				if(login!= null) 
+		User loginUser = userRepository.findUserByUserNameAndPassword(userName, password);
+			
+				if(loginUser!= null) 
 				{
 					return bookingRepository.findByUser(loginUser);
 				}else {
-					throw new Exception("No user found !!!");
+					throw new UserNotFoundException("No user found !!!");
 				}
 	}
 	
